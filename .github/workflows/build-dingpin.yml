@@ -37,6 +37,21 @@ jobs:
         working-directory: dingpin
         run: flutter pub get
 
+      - name: Replace Aliyun Maven mirrors
+        working-directory: dingpin
+        run: |
+          sed -i "s|maven { url 'https://maven.aliyun.com/repository/google' }|google()|g" android/settings.gradle
+          sed -i "s|maven { url 'https://maven.aliyun.com/repository/public' }|mavenCentral()|g" android/settings.gradle
+          sed -i "s|maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }|gradlePluginPortal()|g" android/settings.gradle
+
+          sed -i "s|maven { url 'https://maven.aliyun.com/repository/google' }|google()|g" android/build.gradle
+          sed -i "s|maven { url 'https://maven.aliyun.com/repository/public' }|mavenCentral()|g" android/build.gradle
+
+          echo "=== settings.gradle ==="
+          cat android/settings.gradle
+
+          echo "=== build.gradle ==="
+          cat android/build.gradle
       - name: Build release APK
         working-directory: dingpin
         run: flutter build apk --release

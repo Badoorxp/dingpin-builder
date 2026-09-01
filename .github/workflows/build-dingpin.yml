@@ -52,6 +52,13 @@ jobs:
 
           echo "=== build.gradle ==="
           cat android/build.gradle
+
+      - name: Upgrade Gradle wrapper
+        working-directory: dingpin
+        run: |
+          sed -i 's|gradle-8.9-all.zip|gradle-8.14-all.zip|g' android/gradle/wrapper/gradle-wrapper.properties
+          cat android/gradle/wrapper/gradle-wrapper.properties
+          
       - name: Build release APK
         working-directory: dingpin
         run: flutter build apk --release
